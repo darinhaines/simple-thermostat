@@ -77,7 +77,7 @@ export default function renderInfoItem({
 
   const headingResult = icon
     ? html` <ha-icon icon="${icon}"></ha-icon> `
-    : html` ${heading}: `
+    : html` ${heading}`
 
   return html`
     <div class="sensor-heading">${headingResult}</div>
