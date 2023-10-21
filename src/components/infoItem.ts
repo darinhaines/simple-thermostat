@@ -8,6 +8,8 @@ interface InfoItemDetails extends LooseObject {
   unit?: string
   decimals?: number
   type?: string
+  colorValue?: boolean | false
+  colorName?: boolean | false
 }
 
 interface InfoItemOptions {
@@ -32,18 +34,40 @@ export default function renderInfoItem({
 }: InfoItemOptions) {
   if (hide || typeof state === 'undefined') return
 
-  const { type, heading, icon, unit, decimals } = details
+  const { type, heading, icon, unit, decimals, colorValue, colorName } = details
+
+  let _colorValue = false
+  let _colorName = false
+
+  // apply color to value
+  if (typeof colorValue === 'boolean') {
+    _colorValue = colorValue
+  }
+
+  // apply color to label
+  if (typeof colorName === 'boolean') {
+    _colorName = colorName
+  }
 
   let valueCell
   if (process.env.DEBUG) {
     console.log('ST: infoItem', { state, details })
   }
+
   if (type === 'relativetime') {
-    valueCell = html`
-      <div class="sensor-value">
-        <ha-relative-time .datetime=${state} .hass=${hass}></ha-relative-time>
-      </div>
-    `
+    if (_colorValue) {
+      valueCell = html`
+        <div class="sensor-value2">
+          <ha-relative-time .datetime=${state} .hass=${hass}></ha-relative-time>
+        </div>
+      `
+    } else {
+      valueCell = html`
+        <div class="sensor-value">
+          <ha-relative-time .datetime=${state} .hass=${hass}></ha-relative-time>
+        </div>
+      `
+    }
   } else if (typeof state === 'object') {
     const [domain] = state.entity_id.split('.')
     const prefix = [
@@ -57,18 +81,48 @@ export default function renderInfoItem({
     if (typeof decimals === 'number') {
       value = formatNumber(value, { decimals })
     }
-    valueCell = html`
-      <div
-        class="sensor-value clickable"
-        @click="${() => openEntityPopover(state.entity_id)}"
-      >
-        ${value} ${unit || state.attributes.unit_of_measurement}
-      </div>
-    `
+
+    if (_colorValue) {
+      valueCell = html`
+        <div
+          class="sensor-value2 clickable"
+          @click="${() => openEntityPopover(state.entity_id)}"
+        >
+          ${value} ${unit || state.attributes.unit_of_measurement}
+        </div>
+      `
+    } else {
+      valueCell = html`
+        <div
+          class="sensor-value clickable"
+          @click="${() => openEntityPopover(state.entity_id)}"
+        >
+          ${value} ${unit || state.attributes.unit_of_measurement}
+        </div>
+      `
+    }
   } else {
     let value =
       typeof decimals === 'number' ? formatNumber(state, { decimals }) : state
-    valueCell = html` <div class="sensor-value">${value}${unit}</div> `
+    if (_colorValue) {
+      valueCell = html`
+        <div
+          class="sensor-value2 clickable"
+          @click="${() => openEntityPopover(state.entity_id)}"
+        >
+          ${value}${unit}
+        </div>
+      `
+    } else {
+      valueCell = html`
+        <div
+          class="sensor-value clickable"
+          @click="${() => openEntityPopover(state.entity_id)}"
+        >
+          ${value}${unit}
+        </div>
+      `
+    }
   }
 
   if (heading === false) {
@@ -79,8 +133,15 @@ export default function renderInfoItem({
     ? html` <ha-icon icon="${icon}"></ha-icon> `
     : html` ${heading}`
 
-  return html`
-    <div class="sensor-heading">${headingResult}</div>
-    ${valueCell}
-  `
+  if (_colorName) {
+    return html`
+      <div class="sensor-heading2">${headingResult}</div>
+      ${valueCell}
+    `
+  } else {
+    return html`
+      <div class="sensor-heading">${headingResult}</div>
+      ${valueCell}
+    `
+  }
 }

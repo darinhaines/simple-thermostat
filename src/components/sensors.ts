@@ -27,27 +27,6 @@ export default function renderSensors({
     ].join('')
   }
   const sensorHtml = [
-    renderInfoItem({
-      hide: _hide.temperature,
-      state: `${formatNumber(current, config)}${unit || ''}`,
-      hass,
-      details: {
-        heading: showLabels
-          ? config?.label?.temperature ?? localize('ui.card.climate.currently')
-          : false,
-      },
-    }),
-    renderInfoItem({
-      hide: _hide.state,
-      state: stateString,
-      hass,
-      details: {
-        heading: showLabels
-          ? config?.label?.state ??
-            localize('ui.panel.lovelace.editor.card.generic.state')
-          : false,
-      },
-    }),
     ...(sensors.map(({ name, state, ...rest }) => {
       return renderInfoItem({
         state,
@@ -60,6 +39,35 @@ export default function renderSensors({
         },
       })
     }) || null),
+    renderInfoItem({
+      hide: _hide.temperature,
+      state: `${formatNumber(current, config)}${unit || ''}`,
+      hass,
+      localize,
+      openEntityPopover,
+      details: {
+        colorValue: config?.colorValue?.temperature ?? false,
+        colorName: config?.colorName?.temperature ?? false,
+        heading: showLabels
+          ? config?.label?.temperature ?? localize('ui.card.climate.currently')
+          : false,
+      },
+    }),
+    renderInfoItem({
+      hide: _hide.state,
+      state: stateString,
+      hass,
+      localize,
+      openEntityPopover,
+      details: {
+        colorValue: config?.colorValue?.state ?? false,
+        colorName: config?.colorName?.state ?? false,
+        heading: showLabels
+          ? config?.label?.state ??
+            localize('ui.panel.lovelace.editor.card.generic.state')
+          : false,
+      },
+    }),
   ].filter((it) => it !== null)
 
   return wrapSensors(config, sensorHtml)
