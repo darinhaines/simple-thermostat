@@ -1,0 +1,64 @@
+source example folders:
+   C:\Users\Darin\Downloads\home-assistant\yasimple-thermostat
+   C:\Users\Darin\Downloads\home-assistant\simple-thermostat-redo-previous
+   C:\Users\Darin\Downloads\home-assistant\simple-thermostat-experiment
+   C:\Users\Darin\Downloads\home-assistant\simple-thermostat-pure
+
+git:
+   git clone git@github.com:darinhaines/simple-thermostat.git simple-thermostat-pure
+
+   branches: mine
+             remove-extraneous-colon-from-sensor-labels
+   tags:   v2.4.3-djh.00 (based on "remove-extraneous-colon-from-sensor-labels")
+   relase: v2.4.3-djh.00
+
+notes:
+   there are issues with yarn.  the version of rollup must be forcibly
+   down-graded.  after the downgrade, a build can be created.
+
+build:
+   launch cygwin shell
+   <clone: see above>
+   cd into clone folder
+   git fetch --all
+   git pull --all
+   git checkout <branch>
+   npm install rollup@~2.32 --force
+   yarn build
+
+   launch wsl bash shell
+   sudo su homeassistant
+   cd ~/.homeassistant/www/community/simple-thermostat
+   cp /home/dhaines/home/Downloads/home-assistant/simple-thermostat-pure/dist/simple-thermostat.js .; gzip -k -c simple-thermostat.js > simple-thermostat.js.gz
+
+   clear cache in browser running home-assistant
+   reload browser page running home-assistant
+
+   launch cygwin shell
+   cd /cygdrive/c/Users/Darin/Downloads/home-assistant/yasimple-thermostat
+   yarn build
+   create new tag (e.g. v2.4.3-djh.01) in github (https://github.com/darinhaines/simple-thermostat)
+   create new release per new tag
+   upload simple-thermometer.js to release assets
+   update in hass (HACS->Frontend->Simple Thermostat->...->Redownload)
+ 
+
+/hacsfiles/lovelace-card-mod/card-mod.js?hacstag=190927524314
+/hacsfiles/simple-thermostat/simple-thermostat.djh001.js
+https://github.com/darinhaines/simple-thermostat
+
+    style: |
+      ha-card {
+        --st-mode-active-background: White;
+        --st-mode-active-color: Magenta;
+        --st-mode-background: Gray;
+        --st-fault-inactive-color: Purple;
+        --st-fault-active-color: Black;
+
+        --primary-text-color: forestgreen;
+        --secondary-text-color: Orange;
+        --secondary-background-color: White;
+        --accent-color: Red;
+        --heat-color: Brown;
+        --st-toggle-label-color: Red;
+      }
