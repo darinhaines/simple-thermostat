@@ -34,7 +34,7 @@ ha-card.no-header {
   grid-auto-flow: column;
   grid-auto-columns: minmax(min-content, auto);
   place-items: center;
-  padding: 0 calc(var(--st-spacing, var(--st-default-spacing)) * 4);
+  padding: 0;
   padding-bottom: calc(var(--st-spacing, var(--st-default-spacing)) * 2);
 }
 
@@ -93,37 +93,45 @@ ha-card.no-header {
 .sensor-value {
   display: flex;
   align-items: center;
-  padding-bottom: 4px;
+  padding-bottom: 0px;
+  white-space: nowrap;
+  overflow: visible;
 }
 
 .sensor-value2 {
   display: flex;
   align-items: center;
-  padding-bottom: 4px;
+  padding-bottom: 0px;
+  padding-top: 2px;
+  white-space: nowrap;
   background: var(--st-mode-background, var(--ancillary-background-color));
   color: var(--ancillary-text-color);
+  font-size: 1.8em;
+  overflow: visible;
 }
 
 .sensor-heading {
   font-weight: 300;
   padding-right: 0px;
-  padding-bottom: 4px;
+  padding-bottom: 0px;
   white-space: nowrap;
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  overflow: hidden;
 }
 
 .sensor-heading2 {
   font-weight: 300;
   padding-right: 0px;
-  padding-bottom: 4px;
+  padding-bottom: 0px;
   white-space: nowrap;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   background: var(--st-mode-background, var(--ancillary-background-color));
   color: var(--ancillary-text-color);
+  overflow: hidden;
 }
 
 .sensors:empty {
@@ -158,9 +166,13 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 0px;
+  padding-right: 0px;
   justify-content: center;
-  width: 100%;
-  overflow: hidden;
+  width: 180px;
+  overflow: visible;
   flex-wrap: nowrap;
 
   &.row {
@@ -173,8 +185,8 @@ header {
   align-items: center;
   margin: 0;
   font-weight: 400;
-  line-height: var(--st-font-size-l, var(--paper-font-display1_-_font-size));
-  font-size: var(--st-font-size-l, var(--paper-font-display1_-_font-size));
+  line-height: var(--st-font-size-xl, var(--paper-font-display2_-_font-size));
+  font-size: var(--st-font-size-xl, var(--paper-font-display2_-_font-size));
   @media (--vp-m) {
     font-size: var(--st-font-size-xl, var(--paper-font-display2_-_font-size));
     line-height: var(--st-font-size-xl, var(--paper-font-display2_-_font-size));
