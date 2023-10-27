@@ -95,7 +95,7 @@ ha-card.no-header {
   align-items: center;
   padding-bottom: 0px;
   white-space: nowrap;
-  overflow: visible;
+  overflow: hidden;
 }
 
 .sensor-value2 {
@@ -107,31 +107,35 @@ ha-card.no-header {
   background: var(--st-mode-background, var(--ancillary-background-color));
   color: var(--ancillary-text-color);
   font-size: 1.8em;
-  overflow: visible;
-}
-
-.sensor-heading {
-  font-weight: 300;
-  padding-right: 0px;
-  padding-bottom: 0px;
-  white-space: nowrap;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
   overflow: hidden;
 }
 
-.sensor-heading2 {
+.sensor-heading {
+  display: flex;
   font-weight: 300;
   padding-right: 0px;
   padding-bottom: 0px;
   white-space: nowrap;
+  text-overflow: clip;
+  overflow: hidden;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 70px;
+}
+
+.sensor-heading2 {
   display: flex;
+  font-weight: 300;
+  padding-right: 0px;
+  padding-bottom: 0px;
+  white-space: nowrap;
+  text-overflow: clip;
+  overflow: hidden;
   align-items: center;
   justify-content: flex-end;
   background: var(--st-mode-background, var(--ancillary-background-color));
   color: var(--ancillary-text-color);
-  overflow: hidden;
+  min-width: 70px;
 }
 
 .sensors:empty {
@@ -198,11 +202,13 @@ header {
 }
 
 .current--unit {
-  font-size: var(--st-font-size-m, var(--paper-font-title_-_font-size));
+  font-size: var(--st-font-size-m, 24px);
 }
 
 .thermostat-trigger {
+  border-radius: 50%;
   padding: 0px;
+  border: 2px solid var(--secondary-background-color);
 }
 
 .clickable {
@@ -240,6 +246,7 @@ header {
   text-align: center;
   justify-content: center;
   min-height: 24px;
+  min-width: 90px;
   padding: var(--st-spacing, var(--st-default-spacing)) 0;
   background: var(--st-mode-background, var(--secondary-background-color));
   color: var(--secondary-text-color);
